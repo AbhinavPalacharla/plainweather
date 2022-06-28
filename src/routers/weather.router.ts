@@ -4,25 +4,6 @@ import { Context } from "../utils/context";
 
 export const weatherRouter = trpc
   .router<Context>()
-  .query("currentForecast", {
-    input: z.object({
-      latitude: z.number().min(-90).max(90),
-      longitude: z.number().min(-180).max(180),
-      units: z.enum(["metric", "imperial"]),
-    }),
-    async resolve({ ctx: { weatherClient }, input }) {
-      const { latitude, longitude, units } = input;
-      const { data } = await weatherClient.get("weather", {
-        params: {
-          lat: latitude,
-          lon: longitude,
-          units: units,
-          lang: "en",
-        },
-      });
-      return data;
-    },
-  })
   .query("geocode", {
     input: z.object({
       location: z.string(),
@@ -44,6 +25,37 @@ export const weatherRouter = trpc
         throw new trpc.TRPCError({
           code: "INTERNAL_SERVER_ERROR",
           message: "Failed to fetch geocode data",
+          cause: err,
+        });
+      }
+    },
+  })
+  .query("currentForecast", {
+    input: z.object({
+      latitude: z.number().min(-90).max(90),
+      longitude: z.number().min(-180).max(180),
+      units: z.enum(["metric", "imperial"]),
+    }),
+    async resolve({ ctx: { weatherClient }, input }) {
+      const { latitude, longitude, units } = input;
+
+      try {
+        const { data } = await weatherClient.get("data/2.5/weather", {
+          params: {
+            lat: latitude,
+            lon: longitude,
+            units: units,
+            lang: "en",
+          },
+        });
+        return {
+          temp: data.main.temp,
+          description: data.weather[0].description,
+        };
+      } catch (err) {
+        throw new trpc.TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Failed to fetch current forecast data",
           cause: err,
         });
       }
