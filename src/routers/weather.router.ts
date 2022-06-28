@@ -30,15 +30,41 @@ export const weatherRouter = trpc
       }
     },
   })
+  .query("reverseGeocode", {
+    input: z.object({
+      latitude: z.number().min(-90).max(90),
+      longitude: z.number().min(-180).max(180),
+    }),
+    async resolve({ ctx: { weatherClient }, input: { latitude, longitude } }) {
+      try {
+        const { data } = await weatherClient.get("geo/1.0/reverse", {
+          params: {
+            lat: latitude,
+            lon: longitude,
+            limit: 1,
+          },
+        });
+
+        return data;
+      } catch (err) {
+        throw new trpc.TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Failed to fetch reverse geocode data",
+          cause: err,
+        });
+      }
+    },
+  })
   .query("currentForecast", {
     input: z.object({
       latitude: z.number().min(-90).max(90),
       longitude: z.number().min(-180).max(180),
       units: z.enum(["metric", "imperial"]),
     }),
-    async resolve({ ctx: { weatherClient }, input }) {
-      const { latitude, longitude, units } = input;
-
+    async resolve({
+      ctx: { weatherClient },
+      input: { latitude, longitude, units },
+    }) {
       try {
         const { data } = await weatherClient.get("data/2.5/weather", {
           params: {
@@ -48,10 +74,8 @@ export const weatherRouter = trpc
             lang: "en",
           },
         });
-        return {
-          temperature: data.main.temp,
-          description: data.weather[0].description,
-        };
+
+        return data;
       } catch (err) {
         throw new trpc.TRPCError({
           code: "INTERNAL_SERVER_ERROR",

@@ -486,6 +486,11 @@
   "resolved" "https://registry.npmjs.org/core-js-pure/-/core-js-pure-3.23.2.tgz"
   "version" "3.23.2"
 
+"country-code-emoji@^2.3.0":
+  "integrity" "sha512-MqmIWr3aucoU/3XZU44e0sz6izAlErqaUYp9/NFzdnzb9TrwwornyW3ws2da5TSnpTUr2qP2840oJW9oNKXCoQ=="
+  "resolved" "https://registry.npmjs.org/country-code-emoji/-/country-code-emoji-2.3.0.tgz"
+  "version" "2.3.0"
+
 "cross-spawn@^7.0.2":
   "integrity" "sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w=="
   "resolved" "https://registry.npmjs.org/cross-spawn/-/cross-spawn-7.0.3.tgz"

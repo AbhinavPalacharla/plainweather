@@ -4,6 +4,7 @@ import { AppType } from "next/dist/shared/lib/utils";
 import { AppRouter } from "./api/trpc/[trpc]";
 import Inspect from "inspx";
 import { Layout } from "../components/layout/Layout";
+import { ReactQueryDevtools } from "react-query/devtools";
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
