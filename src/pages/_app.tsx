@@ -1,12 +1,3 @@
-// import "../../styles/globals.css";
-// import type { AppProps } from "next/app";
-
-// function MyApp({ Component, pageProps }: AppProps) {
-//   return <Component {...pageProps} />;
-// }
-
-// export default MyApp;
-
 import "../../styles/globals.css";
 import { withTRPC } from "@trpc/next";
 import { AppType } from "next/dist/shared/lib/utils";
