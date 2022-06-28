@@ -44,7 +44,7 @@ const data: Array<{
 
 export const WeeklyForecast: React.FC = () => {
   return (
-    <div className="flex flex-row gap-x-[4.5rem]">
+    <div className="flex flex-row gap-x-16">
       {data.map((item) => (
         <WeeklyForecastCell day={item.day} high={item.high} low={item.low} />
       ))}
