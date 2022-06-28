@@ -49,7 +49,7 @@ export const weatherRouter = trpc
           },
         });
         return {
-          temp: data.main.temp,
+          temperature: data.main.temp,
           description: data.weather[0].description,
         };
       } catch (err) {

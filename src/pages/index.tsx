@@ -1,18 +1,11 @@
-import { trpc } from "../utils/trpc";
+import { IndexPage } from "../components/pages/Index/Index.page";
 
-export default function IndexPage() {
-  const hello = trpc.useQuery([
-    "weather.geocode",
-    {
-      location: "San Diego",
-    },
-  ]);
-  if (!hello.data) {
-    return <div>Loading...</div>;
-  }
+export default function Home() {
   return (
-    <div>
-      <p>{hello.data[0]}</p>
+    <div className="h-screen">
+      <div className="flex h-screen items-center justify-center">
+        <IndexPage />
+      </div>
     </div>
   );
 }
