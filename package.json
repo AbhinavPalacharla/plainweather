@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@headlessui/react": "^1.6.5",
+    "@heroicons/react": "^1.0.6",
     "@trpc/client": "^9.25.3",
     "@trpc/next": "^9.25.3",
     "@trpc/react": "^9.25.3",
@@ -22,6 +24,7 @@
     "react-dom": "18.2.0",
     "react-geolocated": "^4.0.3",
     "react-query": "^3.39.1",
+    "us-state-converter": "^1.0.6",
     "zod": "^3.17.3"
   },
   "devDependencies": {

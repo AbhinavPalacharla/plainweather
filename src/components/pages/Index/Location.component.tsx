@@ -1,18 +1,20 @@
 import { FC } from "react";
 import { trpc } from "../../../utils/trpc";
 import { countryCodeEmoji } from "country-code-emoji";
+import { useContext } from "react";
+import { LocationContext } from "../../../context/Location.context";
+const states = require("us-state-converter");
 
-type PropTypes = {
-  latitude: number;
-  longitude: number;
-};
+export const Location: FC = () => {
+  const { location } = useContext(LocationContext);
 
-export const Location: FC<PropTypes> = ({ latitude, longitude }) => {
+  console.log("location", location);
+
   const { data, isLoading } = trpc.useQuery([
     "weather.reverseGeocode",
     {
-      latitude: latitude,
-      longitude: longitude,
+      latitude: location.latitude,
+      longitude: location.longitude,
     },
   ]);
 
@@ -24,14 +26,15 @@ export const Location: FC<PropTypes> = ({ latitude, longitude }) => {
         </span>
       </div>
     );
+  } else {
+    return (
+      <div>
+        <span className="inline-block rounded-full bg-black/5 px-3 text-center align-text-bottom font-[400]">
+          {countryCodeEmoji(data[0].country)} &nbsp; {data[0].name},{" "}
+          {data[0].state ? states.abbr(data[0].state) : data[0].country}
+          {/* fix this shit later */}
+        </span>
+      </div>
+    );
   }
-
-  return (
-    <div>
-      <span className="inline-block rounded-full bg-black/5 px-3 text-center align-text-bottom font-[400]">
-        {countryCodeEmoji(data[0].country)} &nbsp; {data[0].name},{" "}
-        {data[0].country}
-      </span>
-    </div>
-  );
 };

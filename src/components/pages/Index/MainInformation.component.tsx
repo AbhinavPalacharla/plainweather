@@ -2,13 +2,16 @@ import type { FC } from "react";
 import { useState, useEffect } from "react";
 import { trpc } from "../../../utils/trpc";
 import { Location } from "./Location.component";
+import { LocationContext } from "../../../context/Location.context";
+import { useContext } from "react";
 
-type PropTypes = {
-  latitude: number;
-  longitude: number;
-};
+// type PropTypes = {
+//   latitude: number;
+//   longitude: number;
+// };
 
-export const MainInformation: FC<PropTypes> = ({ latitude, longitude }) => {
+// export const MainInformation: FC<PropTypes> = ({ latitude, longitude }) => {
+export const MainInformation: FC = () => {
   const days = [
     "Sunday",
     "Monday",
@@ -34,28 +37,24 @@ export const MainInformation: FC<PropTypes> = ({ latitude, longitude }) => {
           minute: "2-digit",
         })
       );
-    }, 10000);
+    }, 1000);
 
     return () => clearInterval(interval);
   });
 
+  const { location } = useContext(LocationContext);
+
   const { data, isLoading } = trpc.useQuery([
     "weather.currentForecast",
     {
-      latitude: latitude,
-      longitude: longitude,
+      latitude: location.latitude,
+      longitude: location.longitude,
       units: "imperial",
     },
   ]);
 
-  console.log(data);
-
   if (isLoading) {
-    return (
-      <div>
-        <p>Loading...</p>
-      </div>
-    );
+    return <div></div>;
   }
 
   return (
@@ -68,11 +67,9 @@ export const MainInformation: FC<PropTypes> = ({ latitude, longitude }) => {
       <div className="flex flex-col justify-between gap-y-7 text-black">
         <div className="flex flex-row gap-x-6">
           <p className="text-xl font-light">{time}</p>
-          <Location latitude={latitude} longitude={longitude} />
+          <Location />
         </div>
-        <p className="text-6xl font-semibold">
-          {days[parseInt(new Date().toLocaleTimeString())]}
-        </p>
+        <p className="text-6xl font-semibold">{days[new Date().getDay()]}</p>
         <p className="text-xl font-light capitalize">
           {data.weather[0].description}
         </p>
