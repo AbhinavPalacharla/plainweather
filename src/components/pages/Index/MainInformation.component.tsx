@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useState, useEffect } from "react";
 import { trpc } from "../../../utils/trpc";
 import { Location } from "./Location.component";
 
@@ -17,6 +18,26 @@ export const MainInformation: FC<PropTypes> = ({ latitude, longitude }) => {
     "Friday",
     "Saturday",
   ];
+
+  const [time, setTime] = useState(
+    new Date().toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    })
+  );
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTime(
+        new Date().toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        })
+      );
+    }, 10000);
+
+    return () => clearInterval(interval);
+  });
 
   const { data, isLoading } = trpc.useQuery([
     "weather.currentForecast",
@@ -46,15 +67,15 @@ export const MainInformation: FC<PropTypes> = ({ latitude, longitude }) => {
       </div>
       <div className="flex flex-col justify-between gap-y-7 text-black">
         <div className="flex flex-row gap-x-6">
-          <p className="text-xl font-light">
-            {new Date().toLocaleTimeString()}
-          </p>
+          <p className="text-xl font-light">{time}</p>
           <Location latitude={latitude} longitude={longitude} />
         </div>
         <p className="text-6xl font-semibold">
           {days[parseInt(new Date().toLocaleTimeString())]}
         </p>
-        <p className="text-xl font-light">{data.weather[0].description}</p>
+        <p className="text-xl font-light capitalize">
+          {data.weather[0].description}
+        </p>
       </div>
     </div>
   );
