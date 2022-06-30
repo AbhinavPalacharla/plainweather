@@ -3,10 +3,10 @@ import { withTRPC } from "@trpc/next";
 import { AppType } from "next/dist/shared/lib/utils";
 import { AppRouter } from "./api/trpc/[trpc]";
 import Inspect from "inspx";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Layout } from "../components/layout/Layout";
 import { LocationContext } from "../context/Location.context";
-import { CommandPalletContext } from "../context/CommandPallet.context";
+import { ThemeProvider } from "next-themes";
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   const [location, setLocation] = useState({
@@ -14,35 +14,15 @@ const MyApp: AppType = ({ Component, pageProps }) => {
     longitude: 2.3522,
   });
 
-  const [isOpen, setIsOpen] = useState(false);
-
-  useEffect(() => {
-    document.addEventListener("keydown", (e) => {
-      e.preventDefault();
-      if ((e.metaKey || e.ctrlKey) && e.code === "KeyK") {
-        setIsOpen(!isOpen);
-      }
-    });
-
-    return () => {
-      document.removeEventListener("keydown", (e) => {
-        e.preventDefault();
-        if ((e.metaKey || e.ctrlKey) && e.code === "KeyK") {
-          setIsOpen(!isOpen);
-        }
-      });
-    };
-  });
-
   return (
     <Inspect>
-      <CommandPalletContext.Provider value={{ isOpen, setIsOpen }}>
+      <ThemeProvider attribute="class">
         <LocationContext.Provider value={{ location, setLocation }}>
           <Layout>
             <Component {...pageProps} />
           </Layout>
         </LocationContext.Provider>
-      </CommandPalletContext.Provider>
+      </ThemeProvider>
     </Inspect>
   );
 };

@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@headlessui/react": "^1.6.5",
     "@heroicons/react": "^1.0.6",
     "@trpc/client": "^9.25.3",
     "@trpc/next": "^9.25.3",
@@ -19,6 +18,7 @@
     "country-code-emoji": "^2.3.0",
     "inspx": "^0.0.1-alpha.6",
     "next": "12.1.6",
+    "next-themes": "^0.2.0",
     "prettier-plugin-tailwindcss": "^0.1.11",
     "react": "18.2.0",
     "react-dom": "18.2.0",

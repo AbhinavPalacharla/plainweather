@@ -60,11 +60,9 @@ export const MainInformation: FC = () => {
   return (
     <div className="static flex flex-row items-center gap-x-16">
       <div>
-        <p className="text-[15rem] font-bold text-black">
-          {Math.round(data.main.temp)}°
-        </p>
+        <p className="text-[15rem] font-bold">{Math.round(data.main.temp)}°</p>
       </div>
-      <div className="flex flex-col justify-between gap-y-7 text-black">
+      <div className="flex flex-col justify-between gap-y-7">
         <div className="flex flex-row gap-x-6">
           <p className="text-xl font-light">{time}</p>
           <Location />

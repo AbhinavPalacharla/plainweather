@@ -42,16 +42,7 @@ export const IndexPage: React.FC = () => {
       <div className="static flex flex-row items-center gap-x-16">
         <MainInformation />
       </div>
-      <div className="mt-6">
-        <button
-          className="rounded-md bg-black/5 py-2 px-3 font-semibold"
-          onClick={() => {
-            handleClick();
-          }}
-        >
-          Change Location
-        </button>
-      </div>
+
       <div className="flex flex-row items-center pt-40">
         <WeeklyForecast />
       </div>
