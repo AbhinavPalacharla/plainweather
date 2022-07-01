@@ -15,13 +15,15 @@ const MyApp: AppType = ({ Component, pageProps }) => {
   });
 
   return (
-    <ThemeProvider attribute="class">
-      <LocationContext.Provider value={{ location, setLocation }}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </LocationContext.Provider>
-    </ThemeProvider>
+    <Inspect>
+      <ThemeProvider attribute="class">
+        <LocationContext.Provider value={{ location, setLocation }}>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </LocationContext.Provider>
+      </ThemeProvider>
+    </Inspect>
   );
 };
 

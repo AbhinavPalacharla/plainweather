@@ -29,7 +29,7 @@ export const IndexPage: React.FC = () => {
         <MainInformation />
       </div>
 
-      <div className="flex flex-row items-center pt-40">
+      <div className="mt-40 flex flex-row items-center">
         <WeeklyForecast />
       </div>
     </div>
