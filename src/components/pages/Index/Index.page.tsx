@@ -23,20 +23,6 @@ export const IndexPage: React.FC = () => {
     },
   ]);
 
-  const handleClick: any = (event: MouseEvent) => {
-    refetch();
-
-    console.log("data", data);
-    console.log("isLoading", isLoading);
-
-    if (!isLoading) {
-      setLocation({
-        latitude: data[0].lat,
-        longitude: data[0].lon,
-      });
-    }
-  };
-
   return (
     <div className="flex flex-col items-center">
       <div className="static flex flex-row items-center gap-x-16">

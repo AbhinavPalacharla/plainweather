@@ -15,8 +15,8 @@ export const WeeklyForecastCell: React.FC<z.infer<typeof propSchema>> = ({
   return (
     <div>
       <p className="font-light">{day}</p>
-      <p className="pt-2 font-semibold">{high}</p>
-      <p className="pt-2 font-semibold">{low}</p>
+      <p className="pt-2 font-semibold">{high}°</p>
+      <p className="pt-2 font-semibold">{low}°</p>
     </div>
   );
 };
