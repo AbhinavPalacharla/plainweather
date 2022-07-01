@@ -8,8 +8,6 @@ const states = require("us-state-converter");
 export const Location: FC = () => {
   const { location } = useContext(LocationContext);
 
-  console.log("location", location);
-
   const { data, isLoading } = trpc.useQuery([
     "weather.reverseGeocode",
     {
@@ -21,7 +19,7 @@ export const Location: FC = () => {
   if (isLoading) {
     return (
       <div>
-        <span className="inline-block rounded-full bg-black/5 px-3 text-center align-text-bottom font-[400]">
+        <span className="inline-block rounded-full bg-black/5 px-3 text-center align-text-bottom font-[400] dark:bg-white/5">
           Loading...
         </span>
       </div>
@@ -29,10 +27,9 @@ export const Location: FC = () => {
   } else {
     return (
       <div>
-        <span className="inline-block rounded-full bg-black/5 px-3 text-center align-text-bottom font-[400]">
+        <span className="inline-block rounded-full bg-black/5 px-3 text-center align-text-bottom font-[400] dark:bg-white/5">
           {countryCodeEmoji(data[0].country)} &nbsp; {data[0].name},{" "}
-          {data[0].state ? states.abbr(data[0].state) : data[0].country}
-          {/* fix this shit later */}
+          {data[0].state ? data[0].country : states.abbr(data[0].state)}
         </span>
       </div>
     );

@@ -84,4 +84,34 @@ export const weatherRouter = trpc
         });
       }
     },
+  })
+  .query("forecast", {
+    input: z.object({
+      latitude: z.number().min(-90).max(90),
+      longitude: z.number().min(-180).max(180),
+      units: z.enum(["metric", "imperial"]),
+    }),
+    async resolve({
+      ctx: { weatherClient },
+      input: { latitude, longitude, units },
+    }) {
+      try {
+        const { data } = await weatherClient.get("data/3.0/onecall", {
+          params: {
+            lat: latitude,
+            lon: longitude,
+            lang: "en",
+            units: units,
+          },
+        });
+
+        return data;
+      } catch (err) {
+        throw new trpc.TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Failed to fetch forecast data",
+          cause: err,
+        });
+      }
+    },
   });
